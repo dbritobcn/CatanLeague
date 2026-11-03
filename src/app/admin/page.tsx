@@ -9,6 +9,7 @@ import { ActionForm } from "@/presentation/components/ActionForm";
 import { MatchCard } from "@/presentation/components/MatchCard";
 import { ResultForm } from "@/presentation/components/ResultForm";
 import { STATUS_LABELS } from "@/presentation/statusLabels";
+import { Plus, X } from "@phosphor-icons/react/dist/ssr";
 
 export const dynamic = "force-dynamic";
 
@@ -22,9 +23,13 @@ export default async function AdminPage() {
 
   return (
     <>
+      <div className="page-intro">
+      <p className="eyebrow">Al otro lado del tablero</p>
       <div className="page-title">
         <h1>Administración</h1>
         <span className="status">{STATUS_LABELS[status]}</span>
+      </div>
+      <p className="page-description">Reúne a tu grupo, pon la liga en marcha y registra cada partida.</p>
       </div>
 
       <section className="section card">
@@ -32,9 +37,12 @@ export default async function AdminPage() {
           Participantes <small>({players.length})</small>
         </h2>
         {registration && (
-          <ActionForm action={addPlayerAction} className="inline-form">
-            <input name="name" placeholder="Nombre del participante" maxLength={40} required autoComplete="off" />
-            <button type="submit">Añadir</button>
+          <ActionForm action={addPlayerAction} className="inline-form" resetOnSuccess>
+            <label className="field-label" htmlFor="player-name">Nombre del participante</label>
+            <div className="inline-fields">
+            <input id="player-name" name="name" placeholder="¿Quién se apunta?" maxLength={40} required autoComplete="off" />
+            <button type="submit"><Plus size={18} aria-hidden="true" />Añadir</button>
+            </div>
           </ActionForm>
         )}
         <ul className="players">
@@ -45,7 +53,7 @@ export default async function AdminPage() {
                 <ActionForm action={removePlayerAction}>
                   <input type="hidden" name="playerId" value={p.id} />
                   <button type="submit" className="ghost" aria-label={`Eliminar a ${p.name}`}>
-                    ✕
+                    <X size={16} aria-hidden="true" />
                   </button>
                 </ActionForm>
               )}
@@ -56,6 +64,7 @@ export default async function AdminPage() {
         {registration ? (
           <ActionForm
             action={startLeagueAction}
+            className="start-league"
             confirm="Una vez iniciada no podrás modificar los participantes. ¿Iniciar la liga?"
           >
             <p className="hint">
@@ -63,7 +72,7 @@ export default async function AdminPage() {
               liguilla: todos se enfrentan al menos una vez, sin repetir combinaciones y con el mismo número de
               partidas por jugador.
             </p>
-            <button type="submit" disabled={players.length < minPlayers}>
+            <button type="submit" disabled={players.length < minPlayers || players.length > maxPlayers}>
               Iniciar liga
             </button>
           </ActionForm>
@@ -81,7 +90,7 @@ export default async function AdminPage() {
 
       {!registration && (
         <>
-          <section className="section">
+          <section className="section" id="resultados">
             <h2>Final</h2>
             {schedule.final ? (
               <MatchCard match={schedule.final}>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Navigation } from "@/presentation/components/Navigation";
+import "@fontsource-variable/inter";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,17 +12,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <body>
-        <header className="site-header">
-          <Link href="/clasificacion" className="brand">
-            <span className="hex" aria-hidden>⬢</span> Liga de Catán
-          </Link>
-          <nav>
-            <Link href="/clasificacion">Clasificación</Link>
-            <Link href="/calendario">Calendario</Link>
-            <Link href="/admin">Admin</Link>
-          </nav>
+        <a className="skip-link" href="#contenido">Saltar al contenido</a>
+        <header className="mobile-header">
+          <img src="/images/catan-emblem.ico" width="40" height="40" alt="" />
+          <span>Liga de Catán</span>
         </header>
-        <main>{children}</main>
+        <Navigation />
+        <main id="contenido" tabIndex={-1}>{children}</main>
       </body>
     </html>
   );
