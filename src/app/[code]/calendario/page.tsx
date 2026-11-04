@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { container } from "@/infrastructure/container";
 import { MatchCard } from "@/presentation/components/MatchCard";
+import { requireExistingLeague } from "@/presentation/auth/guards";
 
 export const dynamic = "force-dynamic";
 
-export default async function SchedulePage() {
-  const { status, rounds, final, played, total } = await container.getSchedule.execute();
+export default async function SchedulePage({ params }: { params: Promise<{ code: string }> }) {
+  const { code } = await params;
+  await requireExistingLeague(code);
+  const { status, rounds, final, played, total } = await container.getSchedule.execute(code);
 
   if (status === "registration") {
     return (
@@ -14,7 +17,7 @@ export default async function SchedulePage() {
           <h1>Calendario</h1>
         </div><p className="page-description">Cada mesa, cada jornada y cada resultado, en un solo lugar.</p></div>
         <div className="empty-state"><h2>El tablero está por estrenar.</h2><p>Cuando inicies la liga, aquí aparecerán las jornadas y todas las partidas de tu grupo.</p>
-        <Link href="/admin" className="button">Preparar la liga</Link></div>
+        <Link href={`/${code}/admin`} className="button">Preparar la liga</Link></div>
       </>
     );
   }

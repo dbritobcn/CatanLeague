@@ -1,5 +1,6 @@
 import { MAX_PLAYERS, MIN_PLAYERS } from "@/domain";
 import type { LeagueRepository } from "../ports/LeagueRepository";
+import { LeagueNotFoundError } from "../errors";
 import { type LeagueStatus, type PlayerView, toPlayerView } from "../views";
 
 export interface PlayersView {
@@ -12,11 +13,12 @@ export interface PlayersView {
 export class GetPlayers {
   constructor(private readonly repository: LeagueRepository) {}
 
-  async execute(): Promise<PlayersView> {
-    const league = await this.repository.get();
+  async execute(code: string): Promise<PlayersView> {
+    const league = await this.repository.findByCode(code);
+    if (!league) throw new LeagueNotFoundError();
     return {
-      status: league.status,
-      players: league.players.map(toPlayerView),
+      status: league.league.status,
+      players: league.league.players.map(toPlayerView),
       minPlayers: MIN_PLAYERS,
       maxPlayers: MAX_PLAYERS,
     };

@@ -140,6 +140,27 @@ button.danger:hover { background: #f8e8db; }
 .feedback.error { color: #9b321b; }
 .feedback.success { color: #2d5f2c; }
 .pending-status { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.home-actions { margin: 18px 0 0; }
+.share-code { display: inline-block; padding: 2px 8px; background: #f1efe4; border: 1px solid var(--border); border-radius: 5px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; overflow-wrap: anywhere; }
+.league-card { display: flex; flex-direction: column; gap: 8px; padding: 20px; text-decoration: none; color: inherit; transition: border-color .15s ease; }
+.league-card:hover { border-color: #b98725; }
+.league-card header { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 8px; }
+.league-card header strong { font-size: 18px; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.league-leader { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.league-leader svg { color: var(--gold); flex-shrink: 0; }
+.league-leader.champion svg { color: #90600d; }
+.league-card .hint { margin-top: auto; }
+.slug-preview { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.admin-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--border); padding-top: 24px; }
+.login-card { padding: 20px; max-width: 560px; }
+.login-card .empty { margin-top: 14px; }
+.auth-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+.auth-toggle button { background: transparent; color: var(--muted); border: 0; border-radius: 7px 7px 0 0; min-height: 42px; font-weight: 600; font-size: 14px; }
+.auth-toggle button[aria-selected="true"] { color: var(--forest); box-shadow: inset 0 -3px 0 var(--gold); }
+.auth-toggle button:hover { background: transparent; color: var(--text); }
+.login-card label.field-label { margin-top: 14px; }
+.login-card .field-label:first-of-type { margin-top: 0; }
+.login-card button[type="submit"] { width: 100%; margin-top: 20px; }
 @media (min-width: 1600px) { main { padding-inline: 56px; } }
 @media (min-width: 640px) and (max-width: 1099px) {
   :root { --sidebar: 104px; }
