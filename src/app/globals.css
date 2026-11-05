@@ -115,7 +115,7 @@ h2 small { font-size: 15px; font-weight: 500; color: var(--muted); }
 .ranking .name { flex: 1; min-width: 0; }
 .ranking .pts { color: #2e651e; font-weight: 700; }
 fieldset.bare { min-width: 0; border: 0; padding: 0; margin: 0; }
-fieldset.bare button[type="submit"] { padding-top: 20px; }
+fieldset.bare button[type="submit"] { margin-top: 20px; }
 input, select { padding: 11px 12px; min-height: 46px; width: 100%; min-width: 0; background: #fffdf8; color: var(--text); border: 1px solid #b6b7a8; border-radius: 7px; }
 input::placeholder { color: #7a7d71; }
 label.field-label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
