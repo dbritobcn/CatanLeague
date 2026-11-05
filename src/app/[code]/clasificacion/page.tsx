@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, Trophy, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRightIcon, TrophyIcon, UsersThreeIcon } from "@phosphor-icons/react/dist/ssr";
 import { container } from "@/infrastructure/container";
 import { MatchCard } from "@/presentation/components/MatchCard";
 import { LeagueHero } from "@/presentation/components/LeagueHero";
+import { NextRoundBand } from "@/presentation/components/NextRoundBand";
 import { requireExistingLeague } from "@/presentation/auth/guards";
 
 export const dynamic = "force-dynamic";
@@ -22,10 +23,11 @@ export default async function StandingsPage({ params }: { params: Promise<{ code
   return <>
     <LeagueHero />
     {champion && <section className="champion" aria-label="Campeón de la liga">
-      <Trophy size={38} weight="duotone" aria-hidden="true" />
+      <TrophyIcon size={38} weight="duotone" aria-hidden="true" />
       <div><span className="eyebrow">Campeón de la liga</span><strong>{champion.name}</strong></div>
       <span className="champion-note">¡La conquista es tuya!</span>
     </section>}
+    {status === "group_stage" && schedule.currentRound && <NextRoundBand code={code} currentRound={schedule.currentRound} />}
     <section aria-labelledby="standings-title">
       <div className="standings-heading">
         <h2 id="standings-title">Clasificación</h2>
@@ -33,11 +35,11 @@ export default async function StandingsPage({ params }: { params: Promise<{ code
           <p>{registration ? `${rows.length} participantes · Preparando la próxima aventura` : `${schedule.played} de ${schedule.total} partidas completadas`}</p>
         </div>
         <Link className="button primary-action" href={registration ? `/${code}/admin` : status === "finished" ? `/${code}/calendario` : `/${code}/admin#resultados`}>
-          {registration ? "Añadir participantes" : status === "finished" ? "Ver partidas" : "Registrar resultado"}<ArrowRight size={19} aria-hidden="true" />
+          {registration ? "Añadir participantes" : status === "finished" ? "Ver partidas" : "Registrar resultado"}<ArrowRightIcon size={19} aria-hidden="true" />
         </Link>
       </div>
       {registration ? <div className="empty-state">
-        <UsersThree size={40} weight="duotone" aria-hidden="true" />
+        <UsersThreeIcon size={40} weight="duotone" aria-hidden="true" />
         <h3>Las grandes ligas empiezan entre amigos.</h3>
         <p>Añade a los participantes e inicia la liga. Nosotros nos encargamos del calendario y de llevar la cuenta.</p>
         <ol className="setup-steps"><li>Añade participantes</li><li>Inicia la liga</li><li>¡A jugar!</li></ol>

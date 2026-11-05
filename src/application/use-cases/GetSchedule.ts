@@ -7,9 +7,17 @@ export interface RoundView {
   matches: MatchView[];
 }
 
+/** The round in play: the first round that still has unplayed matches. */
+export interface CurrentRoundView {
+  round: number;
+  /** Only the unplayed matches of that round, in match-number order. */
+  matches: MatchView[];
+}
+
 export interface ScheduleView {
   status: LeagueStatus;
   rounds: RoundView[];
+  currentRound: CurrentRoundView | null;
   final: MatchView | null;
   played: number;
   total: number;
@@ -30,9 +38,20 @@ export class GetSchedule {
     return {
       status: league.league.status,
       rounds: [...rounds].map(([round, list]) => ({ round, matches: list })),
+      currentRound: currentRoundOf(league.league.status, rounds),
       final: final ? toMatchView(league.league, final) : null,
       played: matches.filter((m) => m.result).length,
       total: matches.length,
     };
   }
+}
+
+/** The round in play: the first round (in order) that still has unplayed matches. */
+function currentRoundOf(status: LeagueStatus, rounds: Map<number, MatchView[]>): CurrentRoundView | null {
+  if (status !== "group_stage") return null;
+  for (const [round, matches] of rounds) {
+    const pending = matches.filter((m) => !m.result);
+    if (pending.length > 0) return { round, matches: pending };
+  }
+  return null;
 }

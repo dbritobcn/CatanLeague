@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 import type { MatchView } from "@/application/views";
-import { Trophy, User } from "@phosphor-icons/react/dist/ssr";
+import { TrophyIcon, UserIcon } from "@phosphor-icons/react/dist/ssr";
 
 export function MatchCard({ match, children }: { match: MatchView; children?: ReactNode }) {
   const isFinal = match.phase === "final";
   return (
     <article className={`card match ${isFinal ? "final" : ""} ${match.result ? "played" : ""}`}>
       <header>
-        <strong>{isFinal && <Trophy size={21} aria-hidden="true" />}{isFinal ? "Gran final" : `Partida ${match.number}`}</strong>
+        <strong>{isFinal && <TrophyIcon size={21} aria-hidden="true" />}{isFinal ? "Gran final" : `Partida ${match.number}`}</strong>
         <span className={`badge ${match.result ? "done" : ""}`}>{match.result ? "Jugada" : "Pendiente"}</span>
       </header>
       {match.result ? (
@@ -23,7 +23,7 @@ export function MatchCard({ match, children }: { match: MatchView; children?: Re
       ) : (
         <ul className="lineup">
           {match.players.map((p) => (
-            <li key={p.id}><User size={17} aria-hidden="true" />{p.name}</li>
+            <li key={p.id}><UserIcon size={17} aria-hidden="true" />{p.name}</li>
           ))}
         </ul>
       )}

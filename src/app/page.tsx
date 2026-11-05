@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Medal, Plus, Trophy } from "@phosphor-icons/react/dist/ssr";
+import { MedalIcon, PlusIcon, TrophyIcon } from "@phosphor-icons/react/dist/ssr";
 import { container } from "@/infrastructure/container";
 import { STATUS_LABELS } from "@/presentation/statusLabels";
 
@@ -22,7 +22,7 @@ export default async function HomePage() {
         <h1 id="home-title">Ligas de Catán<span className="hero-title-end"> entre amigos</span></h1>
         <div className="home-actions">
           <Link href="/crear" className="button">
-            <Plus size={19} aria-hidden="true" /> Crear liga
+            <PlusIcon size={19} aria-hidden="true" /> Crear liga
           </Link>
         </div>
         <div className="landscape">
@@ -38,10 +38,10 @@ export default async function HomePage() {
 
         {leagues.length === 0 ? (
           <div className="empty-state">
-            <Trophy size={40} weight="duotone" aria-hidden="true" />
+            <TrophyIcon size={40} weight="duotone" aria-hidden="true" />
             <h3>Aún no hay ligas en la isla.</h3>
             <p>Crea la primera: ponle nombre, reúne a tu grupo y nosotros nos encargamos del calendario, la clasificación y la final.</p>
-            <Link href="/crear" className="button"><Plus size={19} aria-hidden="true" /> Crear la primera liga</Link>
+            <Link href="/crear" className="button"><PlusIcon size={19} aria-hidden="true" /> Crear la primera liga</Link>
           </div>
         ) : (
           <div className="grid">
@@ -54,11 +54,11 @@ export default async function HomePage() {
                 <p className="empty">{leagueProgress(league.played, league.total, league.status)}</p>
                 {league.champion ? (
                   <p className="league-leader champion">
-                    <Trophy size={17} weight="duotone" aria-hidden="true" /> Campeón: {league.champion}
+                    <TrophyIcon size={17} weight="duotone" aria-hidden="true" /> Campeón: {league.champion}
                   </p>
                 ) : league.leader ? (
                   <p className="league-leader">
-                    <Medal size={17} weight="duotone" aria-hidden="true" /> Líder: {league.leader}
+                    <MedalIcon size={17} weight="duotone" aria-hidden="true" /> Líder: {league.leader}
                   </p>
                 ) : null}
                 <p className="hint">Compartir: <span className="share-code">/{league.code}</span></p>

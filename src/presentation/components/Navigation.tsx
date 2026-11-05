@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarBlank, Plus, Trophy, UsersThree } from "@phosphor-icons/react";
+import { CalendarBlankIcon, PlusIcon, TrophyIcon, UsersThreeIcon } from "@phosphor-icons/react";
 import { RESERVED_SLUGS } from "@/application/slug";
 
 interface NavLink {
   href: string;
   label: string;
   compact: string;
-  icon: typeof Trophy;
+  icon: typeof TrophyIcon;
 }
 
 function linksFor(pathname: string): NavLink[] {
@@ -18,14 +18,14 @@ function linksFor(pathname: string): NavLink[] {
   if (inLeague) {
     const code = firstSegment;
     return [
-      { href: `/${code}/clasificacion`, label: "Clasificación", compact: "Clasificación", icon: Trophy },
-      { href: `/${code}/calendario`, label: "Calendario", compact: "Calendario", icon: CalendarBlank },
-      { href: `/${code}/admin`, label: "Administración", compact: "Admin", icon: UsersThree },
+      { href: `/${code}/clasificacion`, label: "Clasificación", compact: "Clasificación", icon: TrophyIcon },
+      { href: `/${code}/calendario`, label: "Calendario", compact: "Calendario", icon: CalendarBlankIcon },
+      { href: `/${code}/admin`, label: "Administración", compact: "Admin", icon: UsersThreeIcon },
     ];
   }
   return [
-    { href: "/", label: "Ligas", compact: "Ligas", icon: Trophy },
-    { href: "/crear", label: "Crear liga", compact: "Crear", icon: Plus },
+    { href: "/", label: "Ligas", compact: "Ligas", icon: TrophyIcon },
+    { href: "/crear", label: "Crear liga", compact: "Crear", icon: PlusIcon },
   ];
 }
 

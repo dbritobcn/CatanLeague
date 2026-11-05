@@ -12,7 +12,7 @@ import { MatchCard } from "@/presentation/components/MatchCard";
 import { ResultForm } from "@/presentation/components/ResultForm";
 import { STATUS_LABELS } from "@/presentation/statusLabels";
 import { requireLeagueAdmin } from "@/presentation/auth/guards";
-import { Plus, SignOut, Trash, X } from "@phosphor-icons/react/dist/ssr";
+import { PlusIcon, SignOutIcon, TrashIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +50,7 @@ export default async function AdminPage({ params }: { params: Promise<{ code: st
             <label className="field-label" htmlFor="player-name">Nombre del participante</label>
             <div className="inline-fields">
             <input id="player-name" name="name" placeholder="¿Quién se apunta?" maxLength={40} required autoComplete="off" />
-            <button type="submit"><Plus size={18} aria-hidden="true" />Añadir</button>
+            <button type="submit"><PlusIcon size={18} aria-hidden="true" />Añadir</button>
             </div>
           </ActionForm>
         )}
@@ -63,7 +63,7 @@ export default async function AdminPage({ params }: { params: Promise<{ code: st
                   <input type="hidden" name="leagueCode" value={code} />
                   <input type="hidden" name="playerId" value={p.id} />
                   <button type="submit" className="ghost" aria-label={`Eliminar a ${p.name}`}>
-                    <X size={16} aria-hidden="true" />
+                    <XIcon size={16} aria-hidden="true" />
                   </button>
                 </ActionForm>
               )}
@@ -140,7 +140,7 @@ export default async function AdminPage({ params }: { params: Promise<{ code: st
       <section className="section admin-footer">
         <form action={logoutAction}>
           <button type="submit" className="ghost">
-            <SignOut size={16} aria-hidden="true" /> Cerrar sesión
+            <SignOutIcon size={16} aria-hidden="true" /> Cerrar sesión
           </button>
         </form>
         <ActionForm
@@ -149,7 +149,7 @@ export default async function AdminPage({ params }: { params: Promise<{ code: st
         >
           <input type="hidden" name="leagueCode" value={code} />
           <button type="submit" className="danger">
-            <Trash size={16} aria-hidden="true" /> Eliminar liga
+            <TrashIcon size={16} aria-hidden="true" /> Eliminar liga
           </button>
         </ActionForm>
       </section>
