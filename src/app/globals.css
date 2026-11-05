@@ -80,7 +80,7 @@ summary { min-height: 44px; display: list-item; padding: 10px 0; cursor: pointer
 .page-intro .eyebrow { margin-bottom: 12px; }
 .page-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 10px; }
 .page-title h1 { font-size: clamp(32px, 3.4vw, 48px); }
-.page-description { color: var(--muted); max-width: 65ch; }
+.page-description { color: var(--muted); }
 .status { display: inline-block; color: var(--forest); background: #e7ecdf; padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: 650; }
 .section { margin-top: 32px; scroll-margin-top: 20px; }
 .section-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
@@ -115,13 +115,14 @@ h2 small { font-size: 15px; font-weight: 500; color: var(--muted); }
 .ranking .name { flex: 1; min-width: 0; }
 .ranking .pts { color: #2e651e; font-weight: 700; }
 fieldset.bare { min-width: 0; border: 0; padding: 0; margin: 0; }
+fieldset.bare button[type="submit"] { padding-top: 20px; }
 input, select { padding: 11px 12px; min-height: 46px; width: 100%; min-width: 0; background: #fffdf8; color: var(--text); border: 1px solid #b6b7a8; border-radius: 7px; }
 input::placeholder { color: #7a7d71; }
 label.field-label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
 .inline-fields { display: flex; align-items: start; gap: 10px; }
 .inline-fields button { flex-shrink: 0; }
 .players { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 24px 0; }
-.players li { display: flex; align-items: center; max-width: 100%; min-height: 44px; padding: 0 4px 0 14px; background: #f1f0e5; border-radius: 6px; border: 1px solid var(--border); gap: 8px; }
+.players li { display: flex; align-items: center; max-width: 100%; min-height: 44px; padding: 0 12px; background: #f1f0e5; border-radius: 6px; border: 1px solid var(--border); gap: 8px; }
 .players li > span { overflow-wrap: anywhere; font-size: 14px; }
 .players li form { flex-shrink: 0; }
 button.ghost { color: #6d7165; background: transparent; padding: 10px; min-width: 44px; }
@@ -140,6 +141,27 @@ button.danger:hover { background: #f8e8db; }
 .feedback.error { color: #9b321b; }
 .feedback.success { color: #2d5f2c; }
 .pending-status { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.home-actions { margin: 18px 0 0; }
+.share-code { display: inline-block; padding: 2px 8px; background: #f1efe4; border: 1px solid var(--border); border-radius: 5px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; overflow-wrap: anywhere; }
+.league-card { display: flex; flex-direction: column; gap: 8px; padding: 20px; text-decoration: none; color: inherit; transition: border-color .15s ease; }
+.league-card:hover { border-color: #b98725; }
+.league-card header { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 8px; }
+.league-card header strong { font-size: 18px; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.league-leader { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.league-leader svg { color: var(--gold); flex-shrink: 0; }
+.league-leader.champion svg { color: #90600d; }
+.league-card .hint { margin-top: auto; }
+.slug-preview { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.admin-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--border); padding-top: 24px; }
+.login-card { padding: 20px; max-width: 560px; }
+.login-card .empty { margin-top: 14px; }
+.auth-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+.auth-toggle button { background: transparent; color: var(--muted); border: 0; border-radius: 7px 7px 0 0; min-height: 42px; font-weight: 600; font-size: 14px; }
+.auth-toggle button[aria-selected="true"] { color: var(--forest); box-shadow: inset 0 -3px 0 var(--gold); }
+.auth-toggle button:hover { background: transparent; color: var(--text); }
+.login-card label.field-label { margin-top: 14px; }
+.login-card .field-label:first-of-type { margin-top: 0; }
+.login-card button[type="submit"] { width: 100%; margin-top: 20px; }
 @media (min-width: 1600px) { main { padding-inline: 56px; } }
 @media (min-width: 640px) and (max-width: 1099px) {
   :root { --sidebar: 104px; }

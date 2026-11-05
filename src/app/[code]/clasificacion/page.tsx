@@ -3,6 +3,7 @@ import { ArrowRight, Trophy, UsersThree } from "@phosphor-icons/react/dist/ssr";
 import { container } from "@/infrastructure/container";
 import { MatchCard } from "@/presentation/components/MatchCard";
 import { LeagueHero } from "@/presentation/components/LeagueHero";
+import { requireExistingLeague } from "@/presentation/auth/guards";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +11,11 @@ function ScoringLegend() {
   return <p className="scoring-legend" aria-label="Puntuación por puesto"><span>1º <b>·</b> 3 pts</span><span>2º <b>·</b> 2 pts</span><span>3º <b>·</b> 1 pt</span><span>4º <b>·</b> 0 pts</span></p>;
 }
 
-export default async function StandingsPage() {
+export default async function StandingsPage({ params }: { params: Promise<{ code: string }> }) {
+  const { code } = await params;
+  await requireExistingLeague(code);
   const [{ status, rows, final, champion }, schedule] = await Promise.all([
-    container.getStandings.execute(), container.getSchedule.execute(),
+    container.getStandings.execute(code), container.getSchedule.execute(code),
   ]);
   const registration = status === "registration";
   const statusText = registration ? "Inscripción abierta" : status === "group_stage" ? "Liguilla en curso" : status === "final" ? "Todo listo para la final" : "Liga finalizada";
@@ -29,7 +32,7 @@ export default async function StandingsPage() {
         <div className="league-context"><span>{statusText}</span>
           <p>{registration ? `${rows.length} participantes · Preparando la próxima aventura` : `${schedule.played} de ${schedule.total} partidas completadas`}</p>
         </div>
-        <Link className="button primary-action" href={registration ? "/admin" : status === "finished" ? "/calendario" : "/admin#resultados"}>
+        <Link className="button primary-action" href={registration ? `/${code}/admin` : status === "finished" ? `/${code}/calendario` : `/${code}/admin#resultados`}>
           {registration ? "Añadir participantes" : status === "finished" ? "Ver partidas" : "Registrar resultado"}<ArrowRight size={19} aria-hidden="true" />
         </Link>
       </div>

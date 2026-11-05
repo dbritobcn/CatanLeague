@@ -8,7 +8,7 @@ import { ActionForm } from "./ActionForm";
 const POSITIONS = ["1º · 3 pts", "2º · 2 pts", "3º · 1 pt", "4º · 0 pts"];
 const FINAL_POSITIONS = ["1º · Campeón", "2º", "3º", "4º"];
 
-export function ResultForm({ match }: { match: MatchView }) {
+export function ResultForm({ match, leagueCode }: { match: MatchView; leagueCode: string }) {
   const [ranking, setRanking] = useState<string[]>(
     match.result?.map((r) => r.player.id) ?? ["", "", "", ""],
   );
@@ -18,6 +18,7 @@ export function ResultForm({ match }: { match: MatchView }) {
   const form = (
     <ActionForm action={recordResultAction}>
       <input type="hidden" name="matchId" value={match.id} />
+      <input type="hidden" name="leagueCode" value={leagueCode} />
       <div className="result-grid">
         {labels.map((label, index) => (
           <label key={label}>

@@ -2,4 +2,14 @@ node_modules
 .next
 next-env.d.ts
 *.tsbuildinfo
-data/*.json
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Local data (dev persistence)
+data/
+
+# Editor / agent artifacts
+.history
