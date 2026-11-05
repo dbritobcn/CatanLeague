@@ -69,7 +69,9 @@ describe("GetSchedule.currentRound", () => {
   });
 
   it("keeps the round in play and drops the matches that were already recorded", async () => {
-    const league = await createStartedLeague("liga-dos-mesas", 8);
+    // 16 players guarantee 4 tables in the first round; smaller rosters may now pack
+    // fewer tables per round after the fairness phase (minimizing rounds is out of scope).
+    const league = await createStartedLeague("liga-dos-mesas", 16);
     const view = await league.query.execute(league.code);
     const firstRound = view.rounds[0];
     expect(firstRound.matches.length).toBeGreaterThanOrEqual(2); // dos o más mesas en la primera jornada

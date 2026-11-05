@@ -1,10 +1,8 @@
 import type { Fixture } from "../model/Match";
 import type { PlayerId } from "../model/Player";
 import { PLAYERS_PER_MATCH } from "../model/Scoring";
+import { type Lineup, improveFairness } from "./FairnessImprover";
 import type { ScheduleGenerator } from "./ScheduleGenerator";
-
-/** A lineup expressed as indexes into the list of players. */
-type Lineup = readonly number[];
 
 /** How many times the target number of games per player may be raised while balancing. */
 const MAX_BALANCING_RAISES = 3;
@@ -15,7 +13,10 @@ const MAX_BALANCING_RAISES = 3;
  *     have not met yet, until every pair has met at least once.
  *  2. Balance: adds unused lineups so that every player ends up playing the same number of
  *     games (best effort), so the classification is fair.
- *  3. Rounds: packs the matches into rounds where nobody plays twice.
+ *  3. Fairness: swaps players between lineups, without changing the number of matches or
+ *     participations per player, so that no pair is coupled and repeated meetings are
+ *     spread out (with a guaranteed balanced schedule for 10 players).
+ *  4. Rounds: packs the matches into rounds where nobody plays twice.
  *
  * Same input order produces the same schedule; shuffle the players beforehand for variety.
  */
@@ -28,8 +29,9 @@ export class BalancedCoveringScheduleGenerator implements ScheduleGenerator {
     const plan = new Plan(n);
     this.coverAllPairs(candidates, plan);
     this.balanceGamesPerPlayer(candidates, plan);
+    const lineups = improveFairness(plan.lineups, n);
 
-    return assignRounds(plan.lineups).map(({ round, lineup }) => ({
+    return assignRounds(lineups).map(({ round, lineup }) => ({
       round,
       playerIds: lineup.map((index) => playerIds[index]),
     }));

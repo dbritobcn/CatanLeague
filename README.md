@@ -35,6 +35,20 @@ npm test         # tests de dominio y aplicación
 - Reglas: partidas de 4 jugadores (1º → 3, 2º → 2, 3º → 1, 4º → 0), liguilla
   con todos contra todos sin repetir combinaciones, final con los 4 primeros
   (desempate: puntos, nº de 1º, 2º y 3º puestos, nombre).
+- Equidad del calendario: el generador reparte las repeticiones de
+  enfrentamientos para que ninguna pareja comparta todas sus partidas y así una
+  ausencia no deje a nadie sin jugar. Con 10 participantes la garantía es
+  exacta: 10 partidas, 4 por jugador y cada pareja se enfrenta como mucho 2
+  veces (30 parejas 1 vez, 15 dos veces). Para el resto de tamaños (5–24) el
+  calendario nunca es peor que el del generador anterior en acoplamientos,
+  máximo de enfrentamientos por pareja y concentración de repeticiones; el
+  acoplamiento es matemáticamente inevitable en algunos casos (p. ej. 6
+  jugadores). La generación sigue siendo determinista y acotada (< 0,15 s con
+  24 jugadores).
+- Los calendarios ya guardados no se tocan al desplegar: si una liga sin
+  resultados quiere el calendario mejorado, su propietario puede usar
+  «Reiniciar liga» e «Iniciar liga» (ojo: reiniciar descarta los resultados
+  registrados).
 - Los resultados se pueden corregir hasta que se juegue la final (la final se
   recalcula).
 
@@ -43,7 +57,8 @@ npm test         # tests de dominio y aplicación
 ```
 src/
   domain/          Núcleo sin dependencias: agregado League, Match, Standing, reglas de
-                   puntuación y el servicio ScheduleGenerator (+ BalancedCoveringScheduleGenerator).
+                   puntuación y el servicio ScheduleGenerator (+ BalancedCoveringScheduleGenerator
+                   con la fase de equidad FairnessImprover).
                    No conoce códigos de liga, usuarios ni sesiones.
   application/     Casos de uso (CreateLeague, AddPlayer, StartLeague, RecordMatchResult,
                    GetStandings…), puertos (LeagueRepository multi-liga, IdGenerator, Shuffler),
