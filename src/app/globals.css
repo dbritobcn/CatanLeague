@@ -109,6 +109,9 @@ h2 small { font-size: 15px; font-weight: 500; color: var(--muted); }
 .next-round-action { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; font-size: 14px; font-weight: 650; white-space: nowrap; }
 .next-round-action svg { color: var(--gold); transition: transform .15s ease; }
 .next-round-action:hover svg { transform: translateX(3px); }
+.next-round-admin { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 13px; font-weight: 650; color: var(--gold); }
+.next-round-admin svg { transition: transform .15s ease; }
+.next-round-admin:hover svg { transform: translateX(3px); }
 .progress { width: 100%; height: 7px; display: block; border: 0; border-radius: 5px; overflow: hidden; accent-color: var(--forest); margin: 12px 0; }
 .progress::-webkit-progress-bar { background: #e5e7dd; }
 .progress::-webkit-progress-value { background: var(--forest); }

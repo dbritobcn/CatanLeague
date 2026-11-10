@@ -5,6 +5,7 @@ import { MatchCard } from "@/presentation/components/MatchCard";
 import { LeagueHero } from "@/presentation/components/LeagueHero";
 import { NextRoundBand } from "@/presentation/components/NextRoundBand";
 import { requireExistingLeague } from "@/presentation/auth/guards";
+import { canAdministerLeague } from "@/presentation/auth/canAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,7 @@ export default async function StandingsPage({ params }: { params: Promise<{ code
   const [{ status, rows, final, champion }, schedule] = await Promise.all([
     container.getStandings.execute(code), container.getSchedule.execute(code),
   ]);
+  const canAdmin = await canAdministerLeague(code);
   const registration = status === "registration";
   const statusText = registration ? "Inscripción abierta" : status === "group_stage" ? "Liguilla en curso" : status === "final" ? "Todo listo para la final" : "Liga finalizada";
   return <>
@@ -27,16 +29,20 @@ export default async function StandingsPage({ params }: { params: Promise<{ code
       <div><span className="eyebrow">Campeón de la liga</span><strong>{champion.name}</strong></div>
       <span className="champion-note">¡La conquista es tuya!</span>
     </section>}
-    {status === "group_stage" && schedule.currentRound && <NextRoundBand code={code} currentRound={schedule.currentRound} />}
+    {status === "group_stage" && schedule.currentRound && (
+      <NextRoundBand code={code} currentRound={schedule.currentRound} canAdmin={canAdmin} />
+    )}
     <section aria-labelledby="standings-title">
       <div className="standings-heading">
         <h2 id="standings-title">Clasificación</h2>
         <div className="league-context"><span>{statusText}</span>
           <p>{registration ? `${rows.length} participantes · Preparando la próxima aventura` : `${schedule.played} de ${schedule.total} partidas completadas`}</p>
         </div>
-        <Link className="button primary-action" href={registration ? `/${code}/admin` : status === "finished" ? `/${code}/calendario` : `/${code}/admin#resultados`}>
+        {canAdmin ? <Link className="button primary-action" href={registration ? `/${code}/admin` : status === "finished" ? `/${code}/calendario` : `/${code}/admin#resultados`}>
           {registration ? "Añadir participantes" : status === "finished" ? "Ver partidas" : "Registrar resultado"}<ArrowRightIcon size={19} aria-hidden="true" />
-        </Link>
+        </Link> : status === "finished" ? <Link className="button primary-action" href={`/${code}/calendario`}>
+          Ver partidas<ArrowRightIcon size={19} aria-hidden="true" />
+        </Link> : null}
       </div>
       {registration ? <div className="empty-state">
         <UsersThreeIcon size={40} weight="duotone" aria-hidden="true" />

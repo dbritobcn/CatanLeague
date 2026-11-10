@@ -5,7 +5,16 @@ import type { CurrentRoundView } from "@/application/use-cases/GetSchedule";
 /** Cosmética: posición de la mesa dentro de la jornada en curso. La identidad de la partida sigue siendo su "Partida N". */
 const TABLE_LETTERS = "ABCDEFGHIJKLM";
 
-export function NextRoundBand({ code, currentRound }: { code: string; currentRound: CurrentRoundView }) {
+export function NextRoundBand({
+  code,
+  currentRound,
+  canAdmin = false,
+}: {
+  code: string;
+  currentRound: CurrentRoundView;
+  /** Whether the visitor may administer the league; gates any CTA linking to the admin panel. */
+  canAdmin?: boolean;
+}) {
   const { round, matches } = currentRound;
   return (
     <section className="next-round" aria-label="Próxima jornada">
@@ -29,6 +38,11 @@ export function NextRoundBand({ code, currentRound }: { code: string; currentRou
             </li>
           ))}
         </ul>
+        {canAdmin && (
+          <Link className="next-round-admin" href={`/${code}/admin#resultados`}>
+            Registrar resultado<ArrowRightIcon size={16} aria-hidden="true" />
+          </Link>
+        )}
       </div>
       <Link className="next-round-action" href={`/${code}/calendario`}>
         Ver calendario<ArrowRightIcon size={16} aria-hidden="true" />
