@@ -26,10 +26,12 @@ export async function SidebarAuth() {
   const pathname = (await headers()).get("x-pathname") ?? "/";
   const next = pathname !== "/" && !pathname.startsWith("/login") ? `?next=${encodeURIComponent(pathname)}` : "";
   return (
-    <Link className="sidebar-auth" href={`/login${next}`}>
-      <SignInIcon size={22} weight="regular" aria-hidden="true" />
-      <span className="nav-full">Iniciar sesión</span>
-      <span className="nav-compact">Entrar</span>
-    </Link>
+    <div className="sidebar-auth">
+      <Link href={`/login${next}`}>
+        <SignInIcon size={22} weight="regular" aria-hidden="true" />
+        <span className="nav-full">Iniciar sesión</span>
+        <span className="nav-compact">Entrar</span>
+      </Link>
+    </div>
   );
 }
