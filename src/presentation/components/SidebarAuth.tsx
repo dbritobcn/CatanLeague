@@ -1,13 +1,12 @@
-import Link from "next/link";
-import { headers } from "next/headers";
-import { SignInIcon, SignOutIcon } from "@phosphor-icons/react/dist/ssr";
+import { SignOutIcon } from "@phosphor-icons/react/dist/ssr";
 import { logoutAction } from "@/presentation/actions";
 import { getSession } from "@/presentation/auth/server";
+import { SidebarLoginLink } from "./SidebarLoginLink";
 
 /**
- * Sidebar footer auth slot (replaces the tagline): anonymous visitors get a
- * login link that returns to the current page; signed-in users get logout.
- * Server-rendered so the session never leaks to the client bundle.
+ * Sidebar footer auth slot: anonymous visitors get the login link (see
+ * SidebarLoginLink), signed-in users get logout. Server-rendered so the
+ * session never leaks to the client bundle.
  */
 export async function SidebarAuth() {
   const user = await getSession();
@@ -22,16 +21,5 @@ export async function SidebarAuth() {
       </form>
     );
   }
-
-  const pathname = (await headers()).get("x-pathname") ?? "/";
-  const next = pathname !== "/" && !pathname.startsWith("/login") ? `?next=${encodeURIComponent(pathname)}` : "";
-  return (
-    <div className="sidebar-auth">
-      <Link href={`/login${next}`}>
-        <SignInIcon size={22} weight="regular" aria-hidden="true" />
-        <span className="nav-full">Iniciar sesión</span>
-        <span className="nav-compact">Entrar</span>
-      </Link>
-    </div>
-  );
+  return <SidebarLoginLink />;
 }

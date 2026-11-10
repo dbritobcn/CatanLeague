@@ -19,7 +19,6 @@ export async function proxy(request: NextRequest) {
       setAll: (cookiesToSet) => {
         cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
         response = NextResponse.next({ request });
-        response.headers.set("x-pathname", request.nextUrl.pathname);
         cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
       },
     },
@@ -28,10 +27,6 @@ export async function proxy(request: NextRequest) {
   // getUser() validates the token with the Supabase auth server and refreshes
   // it through setAll above when needed.
   await supabase.auth.getUser();
-
-  // Exposes the pathname to server components (the root layout reads it to know
-  // when it renders inside a league and resolve the admin link visibility).
-  response.headers.set("x-pathname", request.nextUrl.pathname);
 
   return response;
 }
