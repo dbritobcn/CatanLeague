@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Navigation } from "@/presentation/components/Navigation";
 import { canAdministerLeague } from "@/presentation/auth/canAdmin";
+import { SidebarAuth } from "@/presentation/components/SidebarAuth";
 import { RESERVED_SLUGS } from "@/application/slug";
 import "@fontsource-variable/inter";
 import "./globals.css";
@@ -30,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <img src="/images/catan-emblem.ico" width="40" height="40" alt="" />
           <span>Liga de Catán</span>
         </header>
-        <Navigation adminLink={await leagueAdminLink()} />
+        <Navigation adminLink={await leagueAdminLink()} footer={<SidebarAuth />} />
         <main id="contenido" tabIndex={-1}>{children}</main>
       </body>
     </html>

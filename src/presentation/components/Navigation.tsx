@@ -39,7 +39,13 @@ function linksFor(pathname: string, adminLink?: AdminLink): NavLink[] {
   ];
 }
 
-export function Navigation({ adminLink }: { adminLink?: AdminLink }) {
+export function Navigation({
+  adminLink,
+  footer,
+}: {
+  adminLink?: AdminLink;
+  footer?: React.ReactNode;
+}) {
   const pathname = usePathname();
   return <aside className="sidebar">
     <Link href="/" className="brand" aria-label="Liga de Catán, inicio">
@@ -52,7 +58,7 @@ export function Navigation({ adminLink }: { adminLink?: AdminLink }) {
         <span className="nav-full">{label}</span><span className="nav-compact">{compact}</span>
       </Link>
     )}</nav>
-    <p className="sidebar-note">Una mesa.<br />Mil historias.</p>
+    {footer}
   </aside>;
 }
 
